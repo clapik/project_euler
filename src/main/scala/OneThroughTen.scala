@@ -45,7 +45,7 @@ object OneThroughTen extends App {
   // Problem 4
   def largestPalindromeProduct(digits: Int): Int = {
     val min = math.pow(10, digits - 1).toInt
-    val max = math.pow(10, digits) - 1.toInt
+    val max = math.pow(10, digits) - 1
     def isPalindrome(s: String): Boolean = {
       if (s.length <= 1) true
       else if (s.charAt(0) == s.charAt(s.length - 1)) isPalindrome(s.substring(1, s.length - 1))
@@ -68,41 +68,42 @@ object OneThroughTen extends App {
     helper(min, min, 0)
   }
 
-  // println(largestPalindromeProduct(3))
+//   println(largestPalindromeProduct(3))
 
   // Problem 5
   def smallestMultiple(n: Int) = {
     val input = (1 to n).toList
     def exists(n: Int, list: List[Int]): Boolean = {
-      if(list.isEmpty) false
-      else if(n == 1) true
-      else if(n % list.head == 0) exists(n / list.head, list.tail)
+      if (list.isEmpty) false
+      else if (n == 1) true
+      else if (n % list.head == 0) exists(n / list.head, list.tail)
       else exists(n, list.tail)
     }
 
     def getProduct(n: List[Int], acc: Int): Int = {
-      if(n.isEmpty) acc
-      else if(acc % n.head == 0) getProduct(n.tail, acc)
+      if (n.isEmpty) acc
+      else if (acc % n.head == 0) getProduct(n.tail, acc)
       else getProduct(n.tail, acc * n.head)
     }
 
     def helper(input: List[Int], acc: List[Int]): List[Int] = {
-      if(input.isEmpty) acc
-      else if(exists(input.head, acc)) helper(input.tail, acc)
+      if (input.isEmpty) acc
+      else if (exists(input.head, acc)) helper(input.tail, acc)
       else helper(input.tail, input.head :: acc)
     }
 
     getProduct(helper(input, List()), 1)
   }
 
-//  println(smallestMultiple(20))
+  //  println(smallestMultiple(20))
 
   // Problem 6
-  def sumSquareDifference(n:Int): Unit = {
+  def sumSquareDifference(n: Int): Unit = {
     // use math!
   }
 
-  println(sumSquareDifference(100))
+  //  println(sumSquareDifference(100))
+
   // Problem 7
   def nextPrime(currentPrimes: List[Long]) = {
     def isPrime(n: Long): Boolean = (for (x <- currentPrimes.reverse if n % x == 0) yield x).isEmpty
@@ -129,6 +130,47 @@ object OneThroughTen extends App {
   //  println(nthPrime(10001L, List()).head)
 
   // Problem 8
+  def largestMultipleOf13AdjacentDigits(n: String): BigInt = {
+    val input = n.replace("\n", "").split("0")
+
+    def splitInto13(x: String, acc: List[String]): List[String] = {
+      if (x.length < 13) acc
+      else splitInto13(x.substring(1), x.substring(0, 13) :: acc)
+    }
+
+    val result = for {
+      x <- input // get each number on split of zero
+      y <- splitInto13(x, List()) // get at list of 13-length string
+      t = y.toList.map(s => Integer.parseInt(s.toString)) // for each 13-length string, convert to a list of 13 digits
+    } yield t.foldRight(BigInt(1))((s, acc) => BigInt(s) * acc) // fold right to get the product
+
+    result.max
+  }
+
+//  println(
+//    largestMultipleOf13AdjacentDigits(
+//      "73167176531330624919225119674426574742355349194934\n" +
+//        "96983520312774506326239578318016984801869478851843\n" +
+//        "85861560789112949495459501737958331952853208805511\n" +
+//        "12540698747158523863050715693290963295227443043557\n" +
+//        "66896648950445244523161731856403098711121722383113\n" +
+//        "62229893423380308135336276614282806444486645238749\n" +
+//        "30358907296290491560440772390713810515859307960866\n" +
+//        "70172427121883998797908792274921901699720888093776\n" +
+//        "65727333001053367881220235421809751254540594752243\n" +
+//        "52584907711670556013604839586446706324415722155397\n" +
+//        "53697817977846174064955149290862569321978468622482\n" +
+//        "83972241375657056057490261407972968652414535100474\n" +
+//        "82166370484403199890008895243450658541227588666881\n" +
+//        "16427171479924442928230863465674813919123162824586\n" +
+//        "17866458359124566529476545682848912883142607690042\n" +
+//        "24219022671055626321111109370544217506941658960408\n" +
+//        "07198403850962455444362981230987879927244284909188\n" +
+//        "84580156166097919133875499200524063689912560717606\n" +
+//        "05886116467109405077541002256983155200055935729725\n" +
+//        "71636269561882670428252483600823257530420752963450")
+//  )
+
 
   // Problem 9
 
