@@ -202,5 +202,5 @@ object OneThroughTen extends App {
     sumHelper(3, max, 0) + 2
   }
 
-  println(sumPrimes(2000000))
+//  println(sumPrimes(2000000))
 }
