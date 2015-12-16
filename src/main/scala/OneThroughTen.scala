@@ -182,21 +182,21 @@ object OneThroughTen extends App {
 
   //  println(findPythagoreanTriplet(1000))
   // Problem 10
-  def isPrime1(n: Int) = {
-    def isPrimeHelper(n: Int, min: Int, max: Int): Boolean = {
-      if (n == 2) true
-      else if (n == 3) true
-      else if (min >= n) true
-      else if (n % min == 0) false
-      else isPrimeHelper(n, min + 2, max)
-    }
-    isPrimeHelper(n, 3, math.sqrt(n).toInt)
-  }
-
   def sumPrimes(max: Long) = {
+    def isPrime(n: Int) = {
+      def isPrimeHelper(n: Int, min: Int, max: Int): Boolean = {
+        if (n == 2) true
+        else if (n == 3) true
+        else if (min >= n) true
+        else if (n % min == 0) false
+        else isPrimeHelper(n, min + 2, max)
+      }
+      isPrimeHelper(n, 3, math.sqrt(n).toInt)
+    }
+
     def sumHelper(current: Int, max: Long, acc: Long): Long = {
       if (current >= max) acc
-      else if (isPrime1(current)) sumHelper(current + 2, max, acc + current)
+      else if (isPrime(current)) sumHelper(current + 2, max, acc + current)
       else sumHelper(current + 2, max, acc)
     }
     sumHelper(3, max, 0) + 2
